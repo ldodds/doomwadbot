@@ -1,0 +1,4 @@
+.env.development.local
+data/images
+data/wads
+ext
