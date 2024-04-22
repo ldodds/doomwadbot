@@ -10,24 +10,23 @@ module DoomwadBot
     def post_text
       text = "#{@wad.idgame.metadata[:title]}\n"
       if @wad.mappers
-        text = text + "by #{@wad.mappers}\n"
+        text = text + "by #{@wad.mappers}\n\n"
       end
       if @wad.category
         text = text + "#{@wad.category}, #{@wad.year}"
         if @wad.award
           text = text + " (#{@wad.award})"
         end
-        text = text + "\n"
+        text = text + "\n\n"
       end
       text = text + "#{@wad.link}\n"
 
       numbers = map_numbers.compact
-      text = text + "#{numbers.size > 1 ? 'Maps' : 'Map'}: #{numbers.compact.join(',')}\n"
+      text = text + "#{numbers.size > 1 ? 'Maps' : 'Map'}: #{numbers.compact.join(', ')}\n"
       text
     end
 
     def map_numbers
-      #TODO E1M1 as well as mapx
       @images.map do |image|
         file = image.split("/").last
         file.split(".").first.upcase
@@ -52,7 +51,7 @@ module DoomwadBot
     private
 
     def create_client
-      @client ||= ::Mastodon::REST::Client.new(base_url: @config[:mastodon][:base_url], bearer_token: @config[:mastodon][:bearer_token])
+      @client ||= ::Mastodon::REST::Client.new(base_url: @config[:mastodon][:base_url], bearer_token: @config[:mastodon][:bearer_token], timeout: {read: 20})
     end
 
   end
