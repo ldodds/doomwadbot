@@ -47,7 +47,7 @@ Only works with WADs. There doesn't seem to be a standard way to organise [a PK3
 
 The intention is to make the bot more sophisticated by:
 
-- Improve the posts to add a bit more metadata, if available
+- Improve the posts to add a bit more metadata, if available. E.g. add idgames rating
 - adding additional WAD lists, e.g. [Dean of Doom reviews](https://doomwiki.org/wiki/Dean_of_Doom) and [Top 100 WADS of all time](https://www.doomworld.com/10years/bestwads/)
 - ability to post levels from a specific WAD via the command-line
 - make more use of the styling supported by wad2image. Currently just randomly selecting adding sprites vs dots, but we could maybe do more. Describing the colour scheme somewhere would be helpful.
