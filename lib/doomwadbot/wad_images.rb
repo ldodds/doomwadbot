@@ -21,10 +21,12 @@ module DoomwadBot
       if list_of_wads.empty?
         @logger.error('No WADS found') if list_of_wads.empty?
       else
+        @logger.debug("Choosing #{list_of_wads.first} from #{list_of_wads}")
         analyser = WadAnalyser.new(
           config: @config,
           wad_file: File.expand_path(list_of_wads.first, downloader.unpacked_dir),
-          slug: downloader.slug_for_wad)
+          slug: downloader.slug_for_wad,
+          logger: @logger)
         @images = analyser.create_map_images
       end
       true

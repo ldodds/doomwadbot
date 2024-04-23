@@ -22,7 +22,8 @@ module DoomwadBot
       text = text + "#{@wad.link}\n"
 
       numbers = map_numbers.compact
-      text = text + "#{numbers.size > 1 ? 'Maps' : 'Map'}: #{numbers.compact.join(', ')}\n"
+      text = text + "#{numbers.size > 1 ? 'Maps' : 'Map'}: #{numbers.compact.join(', ')}\n\n"
+      text = text + "#Doom\n"
       text
     end
 

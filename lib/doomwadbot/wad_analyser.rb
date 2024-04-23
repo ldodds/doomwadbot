@@ -4,14 +4,17 @@ module DoomwadBot
     #wad2image_config is a hash of:
     # :wad2image => path to where wad2image can be found, e.g. File.expand_path('./ext/wad2image')
     # :iwads => path to where original wads can be found, e.g. File.expand_path('./ext/iwads')
-    def initialize(config:, wad_file:, slug:)
+    def initialize(config:, wad_file:, slug:, logger:)
       @config = config
       @wad_file = wad_file
       @slug = slug
+      @logger = logger
     end
 
     def create_map_images
-      system(wad2image_cmd, exception: true)
+      cmd = wad2image_cmd
+      @logger.debug(cmd)
+      system(cmd, exception: true)
       Dir.glob("*.png", base: image_dir).map {|png| File.join(File.expand_path(image_dir), png) }
     end
 

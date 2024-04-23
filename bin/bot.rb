@@ -21,6 +21,6 @@ config = {
 
 
 #puts config.inspect
-bot = DoomwadBot::Bot.new(config: config, test_mode: false)
+bot = DoomwadBot::Bot.new(config: config, test_mode: true)
 
 bot.run
