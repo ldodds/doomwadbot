@@ -49,8 +49,7 @@ module DoomwadBot
       Zip::File.open(file) do |zip_file|
         zip_file.each do |f|
           fpath = File.join(destination, f.name)
-          # Error unpacking with deus-vult
-          # No such file or directory @ rb_sysopen - /home/ldodds/workspaces/current/doomwadbot/data/wads/12597-deus-vult/PRBoom 2.2.4 Demos/DV01-UVMAX2.lmp (Errno::ENOENT)
+          FileUtils.mkdir_p(File.dirname(fpath))
           zip_file.extract(f, fpath) unless File.exist?(fpath)
         end
       end

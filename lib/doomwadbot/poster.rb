@@ -1,10 +1,11 @@
 module DoomwadBot
   class Poster
-    def initialize(logger:, config:, wad:, images:)
+    def initialize(logger:, config:, wad:, wad_images:)
       @logger = logger
       @config = config
       @wad = wad
-      @images = images
+      @wad_images = wad_images
+      @images = @wad_images.select_images.sort
     end
 
     def post_text
@@ -28,9 +29,8 @@ module DoomwadBot
     end
 
     def map_numbers
-      @images.map do |image|
-        file = image.split("/").last
-        file.split(".").first.upcase
+      @images.map do |image_path|
+        map_name(image_path)
       end
     end
 
@@ -38,8 +38,9 @@ module DoomwadBot
       #create attachments
       uploaded = []
       @images.each do |img|
-        @logger.debug("Uploading media #{img}")
-        uploaded << create_client.upload_media(File.new(img), {description: 'A doom map'})
+        alt_text = "#{@wad.idgame.metadata[:title]} #{map_name(img)}"
+        @logger.debug("Uploading media #{img} with alt-text: #{alt_text}")
+        uploaded << create_client.upload_media(File.new(img), {description: alt_text})
       end
 
       @logger.info('Uploaded all media, creating post')
@@ -50,6 +51,11 @@ module DoomwadBot
     end
 
     private
+
+    def map_name(image_path)
+      file = image_path.split("/").last
+      file.split(".").first.upcase
+    end
 
     def create_client
       @client ||= ::Mastodon::REST::Client.new(base_url: @config[:mastodon][:base_url], bearer_token: @config[:mastodon][:bearer_token], timeout: {read: 20})

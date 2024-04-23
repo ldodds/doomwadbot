@@ -31,15 +31,12 @@ module DoomwadBot
       # shotgun-symphony, extracts to a nested dir and so can't find wad
       @logger.info("Extracted #{wad_images.images.length} images")
 
-      #pick images
-      to_post = wad_images.select_images
-
-      if to_post.empty?
+      if wad_images.images.empty?
         @logger.error('Unable to post as no images found')
         return
       end
 
-      poster = Poster.new(logger: @logger, config: @config, wad: wad, images: to_post)
+      poster = Poster.new(logger: @logger, config: @config, wad: wad, wad_images: wad_images)
       puts poster.post_text
 
       #SSL and time out errors from botsinspace
